@@ -17,7 +17,7 @@ from streamlit_stl import stl_from_file, stl_from_text
 
 
 # Set page title and favicon
-st.set_page_config(page_title="kenzo", page_icon="🌑")
+st.set_page_config(page_title="Planet Thalaxis", page_icon="🌑",layout = "wide")
 
 # Custom CSS for styling the Streamlit app
 st.markdown("""
@@ -112,7 +112,7 @@ page = st.sidebar.selectbox("What would you like to see ? ", ["Thalaxis","Planet
 if page == "Thalaxis":
     st.header("Access our research paper below")
     with open("research.pdf", "rb") as file:
-        st.download_button(label="Research Paper", data=file, file_name="research.pdf")
+        st.download_button(label="Research Paper", data=file, file_name="Paper1.pdf")
     st.title("Welcome to Our Planet: Thalaxis")
 
     # Introduction
@@ -369,8 +369,29 @@ elif page == "Data":
 # RAG Bot that lets user ask questions about the planet.
 elif page == "Thalaxis Bot":
     st.header("Thalaxis Bot")
-    st.write("Ask our AI Thalaxis Bot something regarding our planet and it'll deliver an answer !! ")
-    userInput = st.text_input("Want to know more about our world? Type your question down ! ")
-    if st.button("Ask") and userInput != "":
+    st.write("Our AI-Powered Chatbot that is capable of answering questions related to our planet")
+
+    # Adding space between the prompt and the input box
+    st.markdown("<br><br><br><br>", unsafe_allow_html=True)  # Adding space
+
+    # Container for the conversation display (simulating a chat box)
+    conversation_container = st.container()
+
+    # User chat input box
+    userInput = st.chat_input("Want to know more about our world? Type your question below!")
+
+    # If the user types a question, display the conversation
+    if userInput:
+        with conversation_container:
+            # Display user message in the chat format
+            st.chat_message("user").write(userInput)
+        
+        # Generate response from the bot (your existing bot function)
         response = infoBot(userInput)
-        st.write(response.response)
+
+        # Display bot response in the chat format
+        with conversation_container:
+            st.chat_message("assistant").write(response.response)
+
+    # Additional spacing between elements if needed
+    st.markdown("<br><br><br><br>", unsafe_allow_html=True)  # More space for visual clarity
