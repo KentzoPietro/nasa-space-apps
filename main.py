@@ -14,6 +14,17 @@ import numpy as np
 import streamlit as st
 from streamlit_stl import stl_from_file, stl_from_text
 
+def check_answers(answers):
+    correct_answers = {
+        1: "C", 2: "A", 3: "B", 4: "C", 5: "B", 6: "B", 7: "C", 8: "C", 9: "C", 10: "C"
+    }
+    score = 0
+    for i in range(1, 11):
+        if answers.get(i) == correct_answers[i]:
+            score += 1
+    return score
+
+
 
 
 # Set page title and favicon
@@ -106,7 +117,7 @@ st.divider()
 
 # Sidebar setup with logo and page selection
 st.sidebar.image('LOGO.png', width=150)
-page = st.sidebar.selectbox("What would you like to see ? ", ["Thalaxis","Planet Exterior", "Play 3D","Data",  "Thalaxis Bot"])  # Use st.radio instead of selectbox
+page = st.sidebar.selectbox("What would you like to see ? ", ["Thalaxis","Planet Exterior", "Play 3D","Data",  "Thalaxis Bot","Quiz"])  # Use st.radio instead of selectbox
 
 
 if page == "Thalaxis":
@@ -141,7 +152,7 @@ if page == "Thalaxis":
     4. **Prepare for future human colonization** – By understanding how life on celestial bodies with scarce oxygen and sunlight, it is possible to visualize plans on how humans may survive in other celestial bodies with harsh conditions compared to Earth through the use of chemosynthesis.
     """)
 
-    st.image('Thalaxis.png', caption='Thalaxis - A Hypothetical Planet', use_column_width=True)
+    st.image('europabg.png', caption='Thalaxis - A Hypothetical Planet', use_column_width=True)
 
 
 elif page == "Play 3D":
@@ -395,3 +406,121 @@ elif page == "Thalaxis Bot":
 
     # Additional spacing between elements if needed
     st.markdown("<br><br><br><br>", unsafe_allow_html=True)  # More space for visual clarity
+
+elif page == "Quiz":
+    def check_answers(answers):
+        correct_answers = {
+        1: "C", 2: "A", 3: "B", 4: "C", 5: "B", 6: "B", 7: "C", 8: "C", 9: "C", 10: "C"
+        }
+        score = 0
+        for i in range(1, 11):
+            if answers.get(i) == correct_answers[i]:
+                score += 1
+        return score
+
+
+if page == "Thalaxis Bot":
+    st.header("Thalaxis Bot")
+    st.write("Ask our AI Thalaxis Bot something regarding our planet and it'll deliver an answer!!")
+
+    # Adding space between the prompt and the input box
+    st.markdown("<br><br>", unsafe_allow_html=True)
+
+    # Container for the conversation display (simulating a chat box)
+    conversation_container = st.container()
+
+    # User chat input box
+    userInput = st.chat_input("Want to know more about our world? Type your question below!")
+
+    # If the user types a question, display the conversation
+    if userInput:
+        with conversation_container:
+            # Display user message in the chat format
+            st.chat_message("user").write(userInput)
+
+        # Generate response from the bot (simulated here)
+        response = f"Simulated response for: {userInput}"
+
+        # Display bot response in the chat format
+        with conversation_container:
+            st.chat_message("assistant").write(response)
+
+    # More space between conversation and bottom
+    st.markdown("<br><br>", unsafe_allow_html=True)
+
+elif page == "Quiz":
+    st.header("Chemosynthesis and Space Quiz")
+
+    st.write("Test your knowledge about chemosynthesis and celestial bodies!")
+
+    answers = {}
+    correct_answers = {
+        1: "C. Chemical energy",
+        2: "A. Europa",
+        3: "B. Europa",
+        4: "C. Dark, hydrothermal vent-rich environments",
+        5: "B. They release chemicals like hydrogen sulfide that chemosynthetic organisms use.",
+        6: "B. In environments with extreme cold and darkness, like under thick ice.",
+        7: "C. Chemosynthesis uses chemical reactions to produce food, while photosynthesis uses light.",
+        8: "C. Bacteria",
+        9: "C. Hydrothermal vents on the ocean floor"
+    }
+
+
+    # Quiz Questions
+    st.write("1. What is the main energy form used by chemosynthesis?")
+    answers[1] = st.radio(
+        "Choose an answer:", ["A. Solar energy", "B. Wind energy", "C. Chemical energy", "D. Potential energy"]
+    )
+
+    st.write("2. Which moon orbits Jupiter?")
+    answers[2] = st.radio(
+        "Choose an answer:", ["A. Europa", "B. Enceladus", "C. Moon", "D. Atlas"]
+    )
+
+    st.write("3. On which celestial body is chemosynthesis likely to sustain life?")
+    answers[3] = st.radio(
+        "Choose an answer:", ["A. Mars", "B. Europa", "C. Venus", "D. Mercury"]
+    )
+
+    st.write("4. What type of environment is essential for chemosynthetic organisms to thrive?")
+    answers[4] = st.radio(
+        "Choose an answer:", ["A. Sunlight-rich environments", "B. Oxygen-rich environments", "C. Dark, hydrothermal vent-rich environments", "D. Desert environments"]
+    )
+
+    st.write("5. What role do hydrothermal vents play in supporting life through chemosynthesis?")
+    answers[5] = st.radio(
+        "Choose an answer:", ["A. They provide light for photosynthesis.", "B. They release chemicals like hydrogen sulfide that chemosynthetic organisms use.", "C. They increase the oxygen concentration in the water.", "D. They provide shelter for marine animals."]
+    )
+
+    st.write("6. In what type of conditions would chemosynthesis be the dominant form of life sustenance?")
+    answers[6] = st.radio(
+        "Choose an answer:", ["A. In environments with abundant sunlight.", "B. In environments with extreme cold and darkness, like under thick ice.", "C. In desert ecosystems.", "D. On planets close to their stars."]
+    )
+
+    st.write("7. What is the primary difference between chemosynthesis and photosynthesis?")
+    answers[7] = st.radio(
+        "Choose an answer:", ["A. Chemosynthesis uses light energy, while photosynthesis uses chemical energy.", "B. Chemosynthesis occurs only in the presence of oxygen.", "C. Chemosynthesis uses chemical reactions to produce food, while photosynthesis uses light.", "D. Photosynthesis occurs in the dark, while chemosynthesis requires sunlight."]
+    )
+
+    st.write("8. What type of organisms typically perform chemosynthesis on Earth?")
+    answers[8] = st.radio(
+        "Choose an answer:", ["A. Plants", "B. Algae", "C. Bacteria", "D. Fish and marine mammals"]
+    )
+
+    st.write("9. Which of the following environments on Earth is most similar to the hypothesized conditions on a planet sustaining life through chemosynthesis?")
+    answers[9] = st.radio(
+        "Choose an answer:", ["A. Coral reefs", "B. Tropical rainforests", "C. Hydrothermal vents on the ocean floor", "D. Desert sand dunes"]
+    )
+
+    # Submit button to calculate the score
+    # Submit button to calculate the score
+    if st.button("Submit Quiz"):
+        score = check_answers(answers)
+        st.write(f"Your Score: {score}/9")
+        if score == 9:
+            st.success("Excellent! You got a perfect score!")
+        elif score >= 7:
+            st.success("Great job! You passed the quiz.")
+        else:
+            st.error("Keep trying! Review the concepts and try again.")
