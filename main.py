@@ -17,7 +17,7 @@ from streamlit_stl import stl_from_file, stl_from_text
 
 
 # Set page title and favicon
-st.set_page_config(page_title="Planet Thalaxis", page_icon="🌑")
+st.set_page_config(page_title="kenzo", page_icon="🌑")
 
 # Custom CSS for styling the Streamlit app
 st.markdown("""
