@@ -1,0 +1,14 @@
+streamlit
+plotly
+numpy
+Pillow
+pandas
+pyvista
+stpyvista
+seaborn
+matplotlib
+streamlit-stl
+python-dotenv
+llama-index
+openai
+streamlit-option-menu
