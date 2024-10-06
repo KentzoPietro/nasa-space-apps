@@ -374,4 +374,3 @@ elif page == "Thalaxis Bot":
     if st.button("Ask") and userInput != "":
         response = infoBot(userInput)
         st.write(response.response)
-import streamlit as st
