@@ -14,16 +14,6 @@ import numpy as np
 import streamlit as st
 from streamlit_stl import stl_from_file, stl_from_text
 
-def check_answers(answers):
-    correct_answers = {
-        1: "C", 2: "A", 3: "B", 4: "C", 5: "B", 6: "B", 7: "C", 8: "C", 9: "C", 10: "C"
-    }
-    score = 0
-    for i in range(1, 11):
-        if answers.get(i) == correct_answers[i]:
-            score += 1
-    return score
-
 
 
 
@@ -449,78 +439,58 @@ if page == "Thalaxis Bot":
     st.markdown("<br><br>", unsafe_allow_html=True)
 
 elif page == "Quiz":
-    st.header("Chemosynthesis and Space Quiz")
-
-    st.write("Test your knowledge about chemosynthesis and celestial bodies!")
-
-    answers = {}
-    correct_answers = {
-        1: "C. Chemical energy",
-        2: "A. Europa",
-        3: "B. Europa",
-        4: "C. Dark, hydrothermal vent-rich environments",
-        5: "B. They release chemicals like hydrogen sulfide that chemosynthetic organisms use.",
-        6: "B. In environments with extreme cold and darkness, like under thick ice.",
-        7: "C. Chemosynthesis uses chemical reactions to produce food, while photosynthesis uses light.",
-        8: "C. Bacteria",
-        9: "C. Hydrothermal vents on the ocean floor"
+    st.header("Thalaxis Quiz")
+    
+    # List of quiz questions and options
+    questions = {
+        1: ("What is the main energy form used by chemosynthesis?", 
+            {"A": "Solar energy", "B": "Wind energy", "C": "Chemical energy", "D": "Potential energy"}),
+        2: ("Which moon orbits Jupiter?", 
+            {"A": "Europa", "B": "Enceladus", "C": "Moon", "D": "Atlas"}),
+        3: ("On which celestial body is chemosynthesis likely to sustain life?", 
+            {"A": "Mars", "B": "Europa", "C": "Venus", "D": "Mercury"}),
+        4: ("What type of environment is essential for chemosynthetic organisms to thrive?", 
+            {"A": "Sunlight-rich environments", "B": "Oxygen-rich environments", "C": "Dark, hydrothermal vent-rich environments", "D": "Desert environments"}),
+        5: ("What role do hydrothermal vents play in supporting life through chemosynthesis?", 
+            {"A": "They provide light for photosynthesis.", "B": "They release chemicals like hydrogen sulfide that chemosynthetic organisms use.", "C": "They increase the oxygen concentration in the water.", "D": "They provide shelter for marine animals."}),
+        6: ("In what type of conditions would chemosynthesis be the dominant form of life sustenance?", 
+            {"A": "In environments with abundant sunlight.", "B": "In environments with extreme cold and darkness, like under thick ice.", "C": "In desert ecosystems.", "D": "On planets close to their stars."}),
+        7: ("What is the primary difference between chemosynthesis and photosynthesis?", 
+            {"A": "Chemosynthesis uses light energy, while photosynthesis uses chemical energy.", "B": "Chemosynthesis occurs only in the presence of oxygen.", "C": "Chemosynthesis uses chemical reactions to produce food, while photosynthesis uses light.", "D": "Photosynthesis occurs in the dark, while chemosynthesis requires sunlight."}),
+        8: ("What type of organisms typically perform chemosynthesis on Earth?", 
+            {"A": "Plants", "B": "Algae", "C": "Bacteria", "D": "Fish and marine mammals"}),
+        9: ("Which of the following environments on Earth is most similar to the hypothesized conditions on a planet sustaining life through chemosynthesis?", 
+            {"A": "Coral reefs", "B": "Tropical rainforests", "C": "Hydrothermal vents on the ocean floor", "D": "Desert sand dunes"})
     }
 
+    # Store the answers
+    correct_answers = {
+        1: "C", 2: "A", 3: "B", 4: "C", 5: "B", 6: "B", 7: "C", 8: "C", 9: "C"
+    }
 
-    # Quiz Questions
-    st.write("1. What is the main energy form used by chemosynthesis?")
-    answers[1] = st.radio(
-        "Choose an answer:", ["A. Solar energy", "B. Wind energy", "C. Chemical energy", "D. Potential energy"]
-    )
+    # Dictionary to store user answers
+    user_answers = {}
 
-    st.write("2. Which moon orbits Jupiter?")
-    answers[2] = st.radio(
-        "Choose an answer:", ["A. Europa", "B. Enceladus", "C. Moon", "D. Atlas"]
-    )
+    # Loop through the questions and display them with radio buttons for answers
+    for q_num, (q_text, options) in questions.items():
+        user_answers[q_num] = st.radio(q_text, list(options.keys()), format_func=lambda x: options[x])
 
-    st.write("3. On which celestial body is chemosynthesis likely to sustain life?")
-    answers[3] = st.radio(
-        "Choose an answer:", ["A. Mars", "B. Europa", "C. Venus", "D. Mercury"]
-    )
+    # Submit button
+    if st.button("Submit"):
+        # Calculate the score
+        score = 0
+        for q_num, answer in user_answers.items():
+            if answer == correct_answers[q_num]:
+                score += 1
+        
+        # Display the score
+        st.write(f"Your score: {score}/{len(questions)}")
 
-    st.write("4. What type of environment is essential for chemosynthetic organisms to thrive?")
-    answers[4] = st.radio(
-        "Choose an answer:", ["A. Sunlight-rich environments", "B. Oxygen-rich environments", "C. Dark, hydrothermal vent-rich environments", "D. Desert environments"]
-    )
-
-    st.write("5. What role do hydrothermal vents play in supporting life through chemosynthesis?")
-    answers[5] = st.radio(
-        "Choose an answer:", ["A. They provide light for photosynthesis.", "B. They release chemicals like hydrogen sulfide that chemosynthetic organisms use.", "C. They increase the oxygen concentration in the water.", "D. They provide shelter for marine animals."]
-    )
-
-    st.write("6. In what type of conditions would chemosynthesis be the dominant form of life sustenance?")
-    answers[6] = st.radio(
-        "Choose an answer:", ["A. In environments with abundant sunlight.", "B. In environments with extreme cold and darkness, like under thick ice.", "C. In desert ecosystems.", "D. On planets close to their stars."]
-    )
-
-    st.write("7. What is the primary difference between chemosynthesis and photosynthesis?")
-    answers[7] = st.radio(
-        "Choose an answer:", ["A. Chemosynthesis uses light energy, while photosynthesis uses chemical energy.", "B. Chemosynthesis occurs only in the presence of oxygen.", "C. Chemosynthesis uses chemical reactions to produce food, while photosynthesis uses light.", "D. Photosynthesis occurs in the dark, while chemosynthesis requires sunlight."]
-    )
-
-    st.write("8. What type of organisms typically perform chemosynthesis on Earth?")
-    answers[8] = st.radio(
-        "Choose an answer:", ["A. Plants", "B. Algae", "C. Bacteria", "D. Fish and marine mammals"]
-    )
-
-    st.write("9. Which of the following environments on Earth is most similar to the hypothesized conditions on a planet sustaining life through chemosynthesis?")
-    answers[9] = st.radio(
-        "Choose an answer:", ["A. Coral reefs", "B. Tropical rainforests", "C. Hydrothermal vents on the ocean floor", "D. Desert sand dunes"]
-    )
-
-    # Submit button to calculate the score
-    # Submit button to calculate the score
-    if st.button("Submit Quiz"):
-        score = check_answers(answers)
-        st.write(f"Your Score: {score}/9")
-        if score == 9:
-            st.success("Excellent! You got a perfect score!")
-        elif score >= 7:
-            st.success("Great job! You passed the quiz.")
+        # Provide feedback based on the score
+        if score == len(questions):
+            st.success("Perfect score! You're a chemosynthesis expert!")
+        elif score > len(questions) / 2:
+            st.info("Great job! You have a solid understanding.")
         else:
-            st.error("Keep trying! Review the concepts and try again.")
+            st.warning("Keep learning, you're on the right track!")
+

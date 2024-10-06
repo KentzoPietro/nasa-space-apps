@@ -12,3 +12,4 @@ python-dotenv
 llama-index
 openai
 streamlit-option-menu
+llama_index.llms.groq
