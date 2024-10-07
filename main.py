@@ -493,4 +493,3 @@ elif page == "Quiz":
             st.info("Great job! You have a solid understanding.")
         else:
             st.warning("Keep learning, you're on the right track!")
-
