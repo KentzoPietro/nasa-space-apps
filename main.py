@@ -408,36 +408,6 @@ elif page == "Quiz":
                 score += 1
         return score
 
-
-if page == "Thalaxis Bot":
-    st.header("Thalaxis Bot")
-    st.write("Ask our AI Thalaxis Bot something regarding our planet and it'll deliver an answer!!")
-
-    # Adding space between the prompt and the input box
-    st.markdown("<br><br>", unsafe_allow_html=True)
-
-    # Container for the conversation display (simulating a chat box)
-    conversation_container = st.container()
-
-    # User chat input box
-    userInput = st.chat_input("Want to know more about our world? Type your question below!")
-
-    # If the user types a question, display the conversation
-    if userInput:
-        with conversation_container:
-            # Display user message in the chat format
-            st.chat_message("user").write(userInput)
-
-        # Generate response from the bot (simulated here)
-        response = f"Simulated response for: {userInput}"
-
-        # Display bot response in the chat format
-        with conversation_container:
-            st.chat_message("assistant").write(response)
-
-    # More space between conversation and bottom
-    st.markdown("<br><br>", unsafe_allow_html=True)
-
 elif page == "Quiz":
     st.header("Thalaxis Quiz")
     
