@@ -1,13 +1,14 @@
 from llama_index.core import SimpleDirectoryReader, VectorStoreIndex, Settings
 from llama_index.llms.groq import Groq
-import logging
-import os
-import openai
 from urllib.parse import urlparse, parse_qs
 from streamlit_option_menu import option_menu
+from dotenv import load_dotenv
+import os
 
+load_dotenv()
+GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 def infoBot(prompt):
-    Settings.llm = Groq(model="llama3-70b-8192", api_key="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")
+    Settings.llm = Groq(model="llama3-70b-8192", api_key="GROQ_API_KEY")
 
     # Read documents from the reader
     print("Loading documents...")
