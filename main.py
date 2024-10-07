@@ -13,7 +13,6 @@ import plotly.graph_objects as go
 import numpy as np
 import streamlit as st
 from streamlit_stl import stl_from_file, stl_from_text
-pv.start_xvfb()  # Start virtual frame buffer to prevent segmentation fault
 
 
 
