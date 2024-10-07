@@ -14,7 +14,15 @@ import numpy as np
 import streamlit as st
 from streamlit_stl import stl_from_file, stl_from_text
 
-
+def check_answers(answers):
+        correct_answers = {
+        1: "C", 2: "A", 3: "B", 4: "C", 5: "B", 6: "B", 7: "C", 8: "C", 9: "C", 10: "C"
+        }
+        score = 0
+        for i in range(1, 11):
+            if answers.get(i) == correct_answers[i]:
+                score += 1
+        return score
 
 
 # Set page title and favicon
@@ -107,7 +115,7 @@ st.divider()
 
 # Sidebar setup with logo and page selection
 st.sidebar.image('LOGO.png', width=150)
-page = st.sidebar.selectbox("What would you like to see ? ", ["Thalaxis","Planet Exterior", "Play 3D","Data",  "Thalaxis Bot","Quiz"])  # Use st.radio instead of selectbox
+page = st.sidebar.selectbox("What would you like to see ? ", ["Thalaxis","Planet Exterior", "Play 3D","Data",  "Thalaxis Bot","Quiz"    ])  # Use st.radio instead of selectbox
 
 
 if page == "Thalaxis":
@@ -398,18 +406,9 @@ elif page == "Thalaxis Bot":
     st.markdown("<br><br><br><br>", unsafe_allow_html=True)  # More space for visual clarity
 
 elif page == "Quiz":
-    def check_answers(answers):
-        correct_answers = {
-        1: "C", 2: "A", 3: "B", 4: "C", 5: "B", 6: "B", 7: "C", 8: "C", 9: "C", 10: "C"
-        }
-        score = 0
-        for i in range(1, 11):
-            if answers.get(i) == correct_answers[i]:
-                score += 1
-        return score
-
-elif page == "Quiz":
-    st.header("Thalaxis Quiz")
+    st.title("🌍 Thalaxis Quiz")
+    
+    st.markdown("Test your knowledge on chemosynthesis and related topics. Good luck!")
     
     # List of quiz questions and options
     questions = {
@@ -441,9 +440,16 @@ elif page == "Quiz":
     # Dictionary to store user answers
     user_answers = {}
 
-    # Loop through the questions and display them with radio buttons for answers
+    # Initialize score and progress bar
+    total_questions = len(questions)
+    progress = 0
+
+    # Loop through questions with progress tracking
     for q_num, (q_text, options) in questions.items():
+        st.subheader(f"Question {q_num}/{total_questions}")
         user_answers[q_num] = st.radio(q_text, list(options.keys()), format_func=lambda x: options[x])
+        progress += 1
+        st.progress(progress / total_questions)  # Add progress bar after each question
 
     # Submit button
     if st.button("Submit"):
@@ -452,14 +458,27 @@ elif page == "Quiz":
         for q_num, answer in user_answers.items():
             if answer == correct_answers[q_num]:
                 score += 1
-        
-        # Display the score
-        st.write(f"Your score: {score}/{len(questions)}")
 
-        # Provide feedback based on the score
-        if score == len(questions):
-            st.success("Perfect score! You're a chemosynthesis expert!")
-        elif score > len(questions) / 2:
-            st.info("Great job! You have a solid understanding.")
+        # Display the score
+        st.write(f"### Your final score: **{score}/{total_questions}**")
+        
+        # Provide detailed feedback per question
+        st.markdown("### Detailed Feedback")
+        for q_num, answer in user_answers.items():
+            if answer == correct_answers[q_num]:
+                st.success(f"Question {q_num}: Correct! ✅")
+            else:
+                st.error(f"Question {q_num}: Incorrect. ❌ The correct answer is {correct_answers[q_num]}.")
+
+        # Provide overall feedback
+        if score == total_questions:
+            st.balloons()  # Celebration effect for perfect score
+            st.success("Perfect score! You're a chemosynthesis expert! 🎉")
+        elif score > total_questions / 2:
+            st.info("Great job! You have a solid understanding. 👍")
         else:
-            st.warning("Keep learning, you're on the right track!")
+            st.warning("Keep learning, you're on the right track! 📚")
+
+        # Option to retake the quiz
+        if st.button("Retake Quiz"):
+            st.experimental_rerun()  # Restart the quiz
