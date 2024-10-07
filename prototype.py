@@ -15,9 +15,6 @@ import streamlit as st
 from streamlit_stl import stl_from_file, stl_from_text
 import os
 
-pv.start_xvfb()  # Start the virtual frame buffer
-
-
 def check_answers(answers):
         correct_answers = {
         1: "C", 2: "A", 3: "B", 4: "C", 5: "B", 6: "B", 7: "C", 8: "C", 9: "C", 10: "C"
