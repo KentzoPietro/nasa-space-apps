@@ -394,9 +394,9 @@ elif page == "Thalaxis Bot":
 
 elif page == "Quiz":
     st.title("🌍 Thalaxis Quiz")
-    
+
     st.markdown("Test your knowledge on chemosynthesis and related topics. Good luck!")
-    
+
     # List of quiz questions and options
     questions = {
         1: ("What is the main energy form used by chemosynthesis?", 
@@ -419,27 +419,25 @@ elif page == "Quiz":
             {"A": "Coral reefs", "B": "Tropical rainforests", "C": "Hydrothermal vents on the ocean floor", "D": "Desert sand dunes"})
     }
 
-    # Store the answers
+    # Store the correct answers
     correct_answers = {
         1: "C", 2: "A", 3: "B", 4: "C", 5: "B", 6: "B", 7: "C", 8: "C", 9: "C"
     }
 
-    # Dictionary to store user answers
+    # Initialize user answers and score
     user_answers = {}
 
-    # Initialize score and progress bar
-    total_questions = len(questions)
-    progress = 0
-
-    # Loop through questions with progress tracking
-    for q_num, (q_text, options) in questions.items():
-        st.subheader(f"Question {q_num}/{total_questions}")
-        user_answers[q_num] = st.radio(q_text, list(options.keys()), format_func=lambda x: options[x])
-        progress += 1
-        st.progress(progress / total_questions)  # Add progress bar after each question
-
-    # Submit button
-    if st.button("Submit"):
+    # Create form to submit all answers at once
+    with st.form("quiz_form"):
+        total_questions = len(questions)
+        for q_num, (q_text, options) in questions.items():
+            st.subheader(f"Question {q_num}/{total_questions}")
+            user_answers[q_num] = st.radio(q_text, list(options.keys()), format_func=lambda x: options[x])
+        
+        # Submit button inside the form
+        submitted = st.form_submit_button("Submit")
+    
+    if submitted:
         # Calculate the score
         score = 0
         for q_num, answer in user_answers.items():
