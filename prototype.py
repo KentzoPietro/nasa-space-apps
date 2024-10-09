@@ -184,11 +184,12 @@ if page == "Thalaxis":
 
 
 elif page == "Play 3D":
-    st.header("Visualize whatever you can imagine !")
+    st.header("Hydrothermal Vents Imagined")
 
     cols = st.columns(4)
     with cols[0]:
-        color = st.color_picker("Pick a color", "#FF9900", key='color_file')
+        # Remove color picker and set a fixed color
+        color = "#A9A9A9"  # Dark grey color
     with cols[1]:
         material = st.selectbox("Select a material", ["material", "wireframe"], key='material_file')
     with cols[2]:
@@ -197,7 +198,7 @@ elif page == "Play 3D":
     with cols[3]:
         height = st.slider("Height", min_value=50, max_value=1000, value=500, key='height_file')
 
-    stl_from_file(  file_path='Moon.stl', 
+    stl_from_file(  file_path='vents.stl', 
                     color=color,
                     material=material,
                     auto_rotate=auto_rotate,
